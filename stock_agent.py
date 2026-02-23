@@ -41,11 +41,16 @@ def analyze_with_claude(candidates):
     ])
     message = client.messages.create(
         model="claude-opus-4-6",
-        max_tokens=1000,
+        max_tokens=1500,
         messages=[{
             "role": "user",
             "content": f"""다음 종목들 중 오늘 가장 추천할 1종목을 골라주세요.
-기준: 저평가(낮은 PER) + 성장성(높은 매출성장률) + 수익성(높은 ROE)
+
+기준:
+1. 저평가 (낮은 PER)
+2. 성장성 (높은 매출성장률)
+3. 수익성 (높은 ROE)
+4. 미래전망 (AI 대체 위험도, 경쟁 해자, 산업 트렌드)
 
 후보 종목:
 {candidate_text}
@@ -54,6 +59,8 @@ def analyze_with_claude(candidates):
 🏆 오늘의 추천 종목: [티커] ([회사명])
 💰 현재가: $[가격]
 📊 핵심 지표: PER [수치], 매출성장률 [수치]%, ROE [수치]%
+🔮 미래 전망: AI 대체 위험도 [낮음/중간/높음] - [이유 1줄]
+🏰 경쟁 해자: [핵심 경쟁우위 1줄]
 ✅ 추천 이유: [3줄 이내]
 ⚠️ 리스크: [1줄]
 * 이 분석은 참고용이며 투자 판단은 본인 책임입니다."""
